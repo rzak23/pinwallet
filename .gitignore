@@ -1,5 +1,6 @@
 package-lock.json
 
+database/*
 pages/*
 dist/*
 node_modules/*

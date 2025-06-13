@@ -1,0 +1,37 @@
+{
+  "name": "pinwallet",
+  "version": "1.0.0",
+  "description": "Source Code PinWallet (Pencatatan Keuangan Offline)",
+  "main": "index.js",
+  "scripts": {
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rzak23/pinwallet.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/rzak23/pinwallet/issues"
+  },
+  "homepage": "https://github.com/rzak23/pinwallet#readme",
+  "devDependencies": {
+    "electron": "^36.4.0",
+    "gulp": "^5.0.1",
+    "gulp-cli": "^3.1.0",
+    "gulp-file-include": "^2.3.0"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "electron-is-dev": "^2.0.0",
+    "moment": "^2.30.1",
+    "sqlite": "^5.1.1",
+    "sqlite3": "^5.1.7",
+    "store": "^2.0.12",
+    "sweetalert2": "^11.22.0",
+    "uuid": "^11.1.0"
+  }
+}

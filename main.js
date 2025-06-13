@@ -18,7 +18,7 @@ function createWindow () {
 
   // and load the index.html of the app.
   mainWindow.maximize();
-  mainWindow.loadFile('pages/loading.html')
+  mainWindow.loadFile('pages/startapp.html')
   if(!isDev){
     mainWindow.removeMenu()
   }

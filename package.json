@@ -2,9 +2,10 @@
   "name": "pinwallet",
   "version": "1.0.0",
   "description": "Source Code PinWallet (Pencatatan Keuangan Offline)",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "start": "electron ."
+    "start": "electron .",
+    "build-html": "gulp html"
   },
   "repository": {
     "type": "git",

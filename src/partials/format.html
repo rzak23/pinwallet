@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="id">
+  @@include('../partials/head.html')
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      @@include('../partials/navigasi-header.html')
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        @@include('../partials/navigasi-sidebar.html')
+        <!-- partial -->
+        <div class="main-panel">
+            <!-- content -->
+             <div class="content-wrapper">
+                <!-- page header -->
+                <div class="page-header">
+                    <h3 class="page-title">
+                        <span class="page-title-icon bg-gradient-primary text-white me-2">
+                            <i class="mdi dmi-home"></i>
+                        </span> Dashboard
+                    </h3>
+                    <nav aria-label="breadcrumb">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <span>Disesuaikan Dengan Menu</span>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <!-- page header -->
+                <div class="row">
+                    <!-- isi content -->
+                </div>
+             </div>
+            <!-- content -->
+          @@include('../partials/footer.html')
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    @@include('../partials/script.html')
+  </body>
+</html>

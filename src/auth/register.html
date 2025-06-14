@@ -30,38 +30,25 @@
                 <div class="brand-logo">
                   <img src="../../assets/images/logo.svg">
                 </div>
-                <h4>New here?</h4>
-                <h6 class="font-weight-light">Signing up is easy. It only takes a few steps</h6>
+                <h4>Buat Akun PinWallet</h4>
                 <form class="pt-3">
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-lg" id="exampleInputUsername1" placeholder="Username">
+                    <label for="username" class="d-none"></label>
+                    <input type="text" name="username" class="form-control form-control-lg" id="username" autocomplete="off" placeholder="Username">
                   </div>
                   <div class="form-group">
-                    <input type="email" class="form-control form-control-lg" id="exampleInputEmail1" placeholder="Email">
+                    <label for="nama" class="d-none"></label>
+                    <input type="text" name="nama" class="form-control form-control-lg" id="nama" autocomplete="off" placeholder="Nama">
                   </div>
                   <div class="form-group">
-                    <select class="form-select form-select-lg" id="exampleFormControlSelect2">
-                      <option>Country</option>
-                      <option>United States of America</option>
-                      <option>United Kingdom</option>
-                      <option>India</option>
-                      <option>Germany</option>
-                      <option>Argentina</option>
-                    </select>
-                  </div>
-                  <div class="form-group">
-                    <input type="password" class="form-control form-control-lg" id="exampleInputPassword1" placeholder="Password">
-                  </div>
-                  <div class="mb-4">
-                    <div class="form-check">
-                      <label class="form-check-label text-muted">
-                        <input type="checkbox" class="form-check-input"> I agree to all Terms & Conditions </label>
-                    </div>
+                    <label for="pass" class="d-none"></label>
+                    <input type="password" name="pass" class="form-control form-control-lg" id="pass" placeholder="Password">
                   </div>
                   <div class="mt-3 d-grid gap-2">
-                    <a class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" href="../../index.html">SIGN UP</a>
+                    <button type="button" class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" id="btn-regis">
+                      <span>Buat Akun</span>
+                    </button>
                   </div>
-                  <div class="text-center mt-4 font-weight-light"> Already have an account? <a href="login.html" class="text-primary">Login</a>
                   </div>
                 </form>
               </div>
@@ -73,6 +60,9 @@
       <!-- page-body-wrapper ends -->
     </div>
     <!-- container-scroller -->
+    <script>
+      window.jQuery = window.$ = require('jquery');
+    </script>
     <!-- plugins:js -->
     <script src="../../assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
@@ -84,6 +74,7 @@
     <script src="../../assets/js/settings.js"></script>
     <script src="../../assets/js/todolist.js"></script>
     <script src="../../assets/js/jquery.cookie.js"></script>
+    <script type="module" src="../../apps/controllers/auth_controller.js"></script>
     <!-- endinject -->
   </body>
 </html>

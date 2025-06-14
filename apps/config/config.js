@@ -2,6 +2,9 @@ class AppConfig{
     static modeDevelopment = 1;
     static tglRilis = '13-06-2025';
 
+    static tipeIn = 1;
+    static tipeOut = 2;
+
     static getPathDatabase(){
         if(this.modeDevelopment == 1){
             return './database';

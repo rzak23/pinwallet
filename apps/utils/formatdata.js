@@ -16,10 +16,19 @@ class FormatData{
         return sInt;
     }
 
+    static readDouble(value){
+        let sDouble = 0;
+        if(value != '' || value != null){
+            sDouble = parseFloat(value);
+        }
+
+        return sDouble;
+    }
+
     static readString(value){
         let sRes = null;
         if(value != '' || value != null){
-            sRes = value;
+            sRes = value.toString();
         }
 
         return sRes;
@@ -32,6 +41,11 @@ class FormatData{
         }
 
         return sBool;
+    }
+
+        static harga(num){
+        let harga = new Intl.NumberFormat("id-ID", {style: "currency", "currency": "IDR"}).format(num);
+        return harga;
     }
 }
 

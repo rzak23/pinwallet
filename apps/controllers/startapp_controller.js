@@ -43,11 +43,11 @@ class StartAppController{
             }
 
             if(res.totalData === 0){
-                window.location.href = RouteName.register;
+                window.location.href = `auth/${RouteName.register}`;
                 return;
             }
 
-            window.location.href = RouteName.login;
+            window.location.href = `auth/${RouteName.login}`;
         }catch(e){
             swal.fire('Error Cek User', e.message, 'error');
         }

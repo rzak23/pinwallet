@@ -17,6 +17,7 @@ function createWindow () {
   })
 
   // and load the index.html of the app.
+  mainWindow.webContents.openDevTools();
   mainWindow.maximize();
   mainWindow.loadFile('pages/startapp.html')
   if(!isDev){

@@ -11,10 +11,22 @@ window.addEventListener('keydown', async (event) => {
     }
 });
 
-document.getElementById('btn-regis').addEventListener('click', async () => {
-    let auth = new AuthController();
-    await auth.create_akun();
-});
+let btnRegis = document.getElementById('btn-regis');
+let btnLogin = document.getElementById('btn-login');
+
+if(btnRegis){
+    btnRegis.addEventListener('click', async () => {
+        let auth = new AuthController();
+        await auth.create_akun();
+    });
+}
+
+if(btnLogin){
+    btnLogin.addEventListener('click', async () => {
+        let auth = new AuthController();
+        await auth.login();
+    });
+}
 
 //#region AuthController
 class AuthController{
@@ -53,12 +65,40 @@ class AuthController{
 
             swal.fire('Akun', res.message, 'success').then((onPress) => {
                 if(onPress.isConfirmed){
-                    window.location.href = RouteName.login;
+                    window.location.href = `../auth/${RouteName.login}`;
                     return;
                 }
             });
         }catch(e){
             swal.fire('Error Buat Akun', e.message, 'error');
+        }
+    }
+
+    async login(){
+        const swal = require('sweetalert2').default;
+
+        let authService = new AuthService();
+        let res = new ReturnModel();
+        try{
+            let username = FormatData.isHtmlInput(document.getElementById('username')).value;
+            let password = FormatData.isHtmlInput(document.getElementById('pass')).value;
+
+            authService.userData.username = username;
+            authService.userData.password = password;
+            res = await authService.verify();
+            if(res.number != 0){
+                swal.fire(`Error Number : ${res.number}`, res.message, 'error');
+                return;
+            }
+
+            swal.fire('Login', res.message, 'success').then((onPress) => {
+                if(onPress.isConfirmed){
+                    window.location.href = `../${RouteName.dashboard}`;
+                    return;
+                }
+            })
+        }catch(e){
+            swal.fire('Error Login', e.message, 'error');
         }
     }
 }

@@ -33,7 +33,7 @@ class AuthService{
         let res = new ReturnModel();
         try{
             let result = await koneksi.run("INSERT INTO wl_user (userid, nama, username, password) VALUES (:id, :nama, :uname, :pass)",{
-                ':id': uuidv4,
+                ':id': uuidv4(),
                 ':nama': this.userData.nama,
                 ':uname': this.userData.username,
                 ':pass': await this.#passHash(this.userData.password)
@@ -51,6 +51,42 @@ class AuthService{
             res.number = 500;
             res.message = e.message;
             return res;
+        }finally{
+            await koneksi.close();
+        }
+    }
+
+    async verify(){
+        let bcrypt = require('bcryptjs');
+
+        let koneksi = await Koneksi.openDB();
+        let res = new ReturnModel();
+        try{
+            let result = await koneksi.get("SELECT * FROM wl_user WHERE username = :username", {
+                ':username': this.userData.username
+            });
+            if(!result){
+                res.number = 404;
+                res.message = 'Data tidak ditemukan';
+                return res;
+            }
+
+            let verifyPassword = await bcrypt.compare(this.userData.password, result.password);
+            if(!verifyPassword){
+                res.number = 404;
+                res.message = 'Kombinasi password tidak cocok';
+                return res;
+            }
+
+            window.localStorage.setItem('iduser', result.userid);
+            res.message = 'Login berhasil';
+            return res;
+        }catch(e){
+            res.number = 500;
+            res.message = e.message;
+            return res;
+        }finally{
+            await koneksi.close();
         }
     }
 

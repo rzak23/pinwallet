@@ -1,6 +1,8 @@
 class RouteName{
-    static login = '../pages/auth/login.html';
-    static register = '../pages/auth/register.html';
+    static login = 'login.html';
+    static register = 'register.html';
+
+    static dashboard = 'dashboard.html';
 }
 
 export default RouteName;

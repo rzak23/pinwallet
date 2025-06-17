@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="id">
+  @@include('../partials/head.html', {"path": "../.."})
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      @@include('../partials/navigasi-header.html', {"path": "../.."})
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        @@include('../partials/navigasi-sidebar.html', {"path": "../.."})
+        <!-- partial -->
+        <div class="main-panel">
+            <!-- content -->
+             <div class="content-wrapper">
+                <!-- page header -->
+                <div class="page-header">
+                    <h3 class="page-title">
+                        <span class="page-title-icon bg-gradient-primary text-white me-2">
+                            <i class="mdi mdi-shape"></i>
+                        </span> Kategori
+                    </h3>
+                    <nav aria-label="breadcrumb">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="#" onclick="pageLocation('dashboard')">
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a href="#" onclick="pageLocation('kategori')">
+                                    <span>Kategori</span>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <span>Form Kategori</span>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <!-- page header -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title" id="title"></h4>
+                                <div class="form-group">
+                                    <label for="kategori">Nama Kategori</label>
+                                    <input type="text" name="kategori" class="form-control" id="kategori" autocomplete="off" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="tipe">Tipe</label>
+                                    <select name="tipe" class="form-select" id="tipe">
+                                        <option value="1">Pemasukan</option>
+                                        <option value="2">Pengeluaran</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <button type="button" class="btn btn-sm btn-success" id="btn-save">
+                                        <span>Simpan</span>
+                                        <i class="fa fa-save"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+            <!-- content -->
+          @@include('../partials/footer.html')
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    @@include('../partials/script.html', {"path": "../.."})
+    <script type="module" src="../../apps/controllers/kategori/kategoriae_controller.js"></script>
+  </body>
+</html>

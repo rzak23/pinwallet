@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+  @@include('../partials/head.html', {"path": "../.."})
+  <body>
+    <div class="container-scroller">
+      <!-- partial:partials/_navbar.html -->
+      @@include('../partials/navigasi-header.html', {"path": "../.."})
+      <!-- partial -->
+      <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html -->
+        @@include('../partials/navigasi-sidebar.html', {"path": "../.."})
+        <!-- partial -->
+        <div class="main-panel">
+            <!-- content -->
+             <div class="content-wrapper">
+                <!-- page header -->
+                <div class="page-header">
+                    <h3 class="page-title">
+                        <span class="page-title-icon bg-gradient-primary text-white me-2">
+                            <i class="mdi mdi-shape"></i>
+                        </span> Kategori
+                    </h3>
+                    <nav aria-label="breadcrumb">
+                        <ul class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="#" onclick="pageLocation('dashboard')">
+                                    <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li class="breadcrumb-item active" aria-current="page">
+                                <span>Kategori</span>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                <!-- page header -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex">
+                                    <div class="p-2 flex-grow-1">
+                                        <h4 class="card-title">Daftar Kategori</h4>
+                                    </div>
+                                    <div class="p-2">
+                                        <button type="button" class="btn btn-sm btn-success" id="btn-add">
+                                            <span>Tambah</span>
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a href="#pemasukan" class="nav-link active" data-bs-toggle="tab" role="tab">
+                                                <span>Pemasukan</span>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a href="#pengeluaran" class="nav-link" data-bs-toggle="tab" role="tab">
+                                                <span>Pengeluaran</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <!-- tab pane -->
+                                     <div class="tab-content">
+                                        <div class="tab-pane active p-3" id="pemasukan" role="tabpanel">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <tbody id="list-pemasukan"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane p-3" id="pengeluaran" role="tabpanel">
+                                            <div class="table-responsive">
+                                                <table class="table table-striped">
+                                                    <tbody id="list-pengeluaran"></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                     </div>
+                                    <!-- tab pane -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+             </div>
+            <!-- content -->
+          @@include('../partials/footer.html')
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    <!-- container-scroller -->
+    @@include('../partials/script.html', {"path": "../.."})
+    <script type="module" src="../../apps/controllers/kategori/kategorilist_controller.js"></script>
+  </body>
+</html>

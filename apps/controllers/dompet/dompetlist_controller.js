@@ -12,7 +12,17 @@ window.onClickTambah = () => {
     window.location.href = RouteName.dompetae;
 }
 
-class DompetListController{
+window.onClickEdit = (id) => {
+    window.location.href = `${RouteName.dompetae}?id=${id}`;
+}
+
+window.onClickHapus = (id) => {
+    let dompet = new DompetListController();
+    dompet.hapus_data(id);
+}
+
+//#region DompetListController
+class DompetListController{ 
     async list_data(){
         let swal = require('sweetalert2').default;
         let res = new ReturnModel();
@@ -32,10 +42,10 @@ class DompetListController{
                             `<td>${data[i].namadompet}</td>`+
                             `<td>${FormatData.harga(data[i].nominal)}</td>`+
                             '<td class="text-center">'+
-                                `<button type="button" class="btn btn-sm btn-info me-3" onclick="onClickEdit('${data[i].id}')">`+
+                                `<button type="button" class="btn btn-sm btn-info me-2" onclick="onClickEdit('${data[i].dompetid}')">`+
                                     '<i class="fa fa-edit"></i>'+
                                 '</button>'+
-                                `<button type="button" class="btn btn-sm btn-danger" onclick="onClickHapus('${data[i].id}')">`+
+                                `<button type="button" class="btn btn-sm btn-danger" onclick="onClickHapus('${data[i].dompetid}')">`+
                                     '<i class="fa fa-trash"></i>'+
                                 '</button>'+
                             '</td>'+
@@ -47,4 +57,28 @@ class DompetListController{
             swal.fire('Error List Data', e.message, 'error');
         }
     }
+
+    async hapus_data(id){
+        let swal = require('sweetalert2').default;
+        let res = new ReturnModel();
+        let dompetListService = new DompetListService();
+
+        try{
+            res = await dompetListService.deleteData(id);
+            if(res.number != 0){
+                swal.fire(`Error Number : ${res.number}`, res.message, 'error');
+                return;
+            }
+
+            swal.fire('Hapus Dompet', res.message, 'success').then((onPress) => {
+                if(onPress.isConfirmed){
+                    window.location.reload();
+                    return;
+                }
+            });
+        }catch(e){
+            swal.fire('Error Hapus Data', e.message, 'error');
+        }
+    }
 }
+//#endregion DompetListController

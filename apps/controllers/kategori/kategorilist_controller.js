@@ -11,6 +11,15 @@ document.getElementById('btn-add').addEventListener('click', () => {
     window.location.href = RouteName.kategoriae;
 });
 
+window.onClickEdit = (id) => {
+    window.location.href = `${RouteName.kategoriae}?id=${id}`;
+}
+
+window.onClickHapus = (id) => {
+    let kategori = new KategoriListController();
+    kategori.hapus(id);
+}
+
 //#region KategoriListController
 class KategoriListController{
     async list_data(){
@@ -36,7 +45,7 @@ class KategoriListController{
                                         '<i class="fa fa-edit"></i>'+
                                     '</button>'+
                                     `<button class="btn btn-sm btn-danger" onclick="onClickHapus(${data[i].kategoriid})">`+
-                                        '<i class="fa fa-edit"></i>'+
+                                        '<i class="fa fa-trash"></i>'+
                                     '</button>'+
                                 '</td>'+
                             '</tr>';
@@ -50,7 +59,7 @@ class KategoriListController{
                                         '<i class="fa fa-edit"></i>'+
                                     '</button>'+
                                     `<button class="btn btn-sm btn-danger" onclick="onClickHapus(${data[i].kategoriid})">`+
-                                        '<i class="fa fa-edit"></i>'+
+                                        '<i class="fa fa-trash"></i>'+
                                     '</button>'+
                                 '</td>'+
                             '</tr>';
@@ -61,6 +70,29 @@ class KategoriListController{
             }
         }catch(e){
             swal.fire('Error List Data', e.message, 'error');
+        }
+    }
+
+    async hapus(id){
+        let swal = require('sweetalert2').default;
+        let res = new ReturnModel();
+        let kategori = new KategoriListService();
+
+        try{
+            res = await kategori.deleteData(id);
+            if(res.number != 0){
+                swal.fire(`Error Number : ${res.number}`, res.message, 'error');
+                return;
+            }
+
+            swal.fire('Hapus Kategori', res.message, 'success').then((onPress) => {
+                if(onPress.isConfirmed){
+                    window.location.reload();
+                    return;
+                }
+            });
+        }catch(e){
+            swal.fire('Error Hapus', e.message, 'error');
         }
     }
 }

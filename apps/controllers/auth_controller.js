@@ -1,6 +1,7 @@
 import RouteName from '../config/routename.js';
 import ReturnModel from '../models/return_model.js';
 import AuthService from '../services/auth_service.js';
+import DialogApp from '../utils/dialogapp.js';
 import FormatData from '../utils/formatdata.js';
 
 window.addEventListener('keydown', async (event) => {
@@ -57,7 +58,10 @@ class AuthController{
             authService.userData.nama = nama;
             authService.userData.username = username;
             authService.userData.password = pass;
+
+            DialogApp.showLoading();
             res = await authService.createAkun();
+            DialogApp.hideLoading();
             if(res.number != 0){
                 swal.fire(`Error Number : ${res.number}`, res.message, 'error');
                 return;
@@ -85,7 +89,10 @@ class AuthController{
 
             authService.userData.username = username;
             authService.userData.password = password;
+
+            DialogApp.showLoading();
             res = await authService.verify();
+            DialogApp.hideLoading();
             if(res.number != 0){
                 swal.fire(`Error Number : ${res.number}`, res.message, 'error');
                 return;

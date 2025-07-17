@@ -3,33 +3,16 @@ import DompetListService from "../../services/dompet/dompetlist_service.js";
 import RouteName from "../../config/routename.js";
 import FormatData from "../../utils/formatdata.js";
 
-window.addEventListener('load', () => {
-    let dompet = new DompetListController();
-    dompet.list_data();
-})
-
-window.onClickTambah = () => {
-    window.location.href = RouteName.dompetae;
-}
-
-window.onClickEdit = (id) => {
-    window.location.href = `${RouteName.dompetae}?id=${id}`;
-}
-
-window.onClickHapus = (id) => {
-    let dompet = new DompetListController();
-    dompet.hapus_data(id);
-}
-
 //#region DompetListController
 class DompetListController{ 
+    dompetListService = new DompetListService();
+
     async list_data(){
         let swal = require('sweetalert2').default;
         let res = new ReturnModel();
-        let dompetListService = new DompetListService();
 
         try{
-            res = await dompetListService.requestData();
+            res = await this.dompetListService.requestData();
             if(res.number != 0){
                 swal.fire(`Error Number : ${res.number}`, res.message, 'error');
                 return;
@@ -61,10 +44,9 @@ class DompetListController{
     async hapus_data(id){
         let swal = require('sweetalert2').default;
         let res = new ReturnModel();
-        let dompetListService = new DompetListService();
 
         try{
-            res = await dompetListService.deleteData(id);
+            res = await this.dompetListService.deleteData(id);
             if(res.number != 0){
                 swal.fire(`Error Number : ${res.number}`, res.message, 'error');
                 return;
@@ -82,3 +64,20 @@ class DompetListController{
     }
 }
 //#endregion DompetListController
+
+let dompet = new DompetListController();
+window.addEventListener('load', () => {
+    dompet.list_data();
+})
+
+window.onClickTambah = () => {
+    window.location.href = RouteName.dompetae;
+}
+
+window.onClickEdit = (id) => {
+    window.location.href = `${RouteName.dompetae}?id=${id}`;
+}
+
+window.onClickHapus = (id) => {
+    dompet.hapus_data(id);
+}

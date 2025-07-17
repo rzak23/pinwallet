@@ -3,48 +3,18 @@ import ReturnModel from "../../models/return_model.js";
 import DompetAEService from "../../services/dompet/dompetae_service.js";
 import FormatData from "../../utils/formatdata.js";
 
-window.addEventListener('load', () => {
-    const param = new URLSearchParams(window.location.search);
-    let id = param.get('id');
-    if(FormatData.isNullorEmpty(id)){
-        document.getElementById('title').innerHTML = 'Buat Dompet Baru';
-        document.getElementById('btn-save').setAttribute('data-mode', 'add');
-        return;
-    }
-
-    let dompetAe = new DompetAEController();
-    dompetAe.read_data(id);
-    
-    document.getElementById('title').innerHTML = 'Edit Dompet';
-    document.getElementById('btn-save').setAttribute('data-mode', 'edit');
-    document.getElementById('btn-save').setAttribute('data-item-id', id);
-});
-
-let btnSave = document.getElementById('btn-save');
-btnSave.addEventListener('click', () => {
-    let dompetAe = new DompetAEController();
-
-    let mode = btnSave.dataset.mode;
-    if(mode == 'add'){
-        dompetAe.save_data();
-        return;
-    }
-
-    let id = btnSave.dataset.itemId;
-    dompetAe.update_data(id);
-})
-
 //#region DompetAEController
 class DompetAEController{
+    dompetAeService = new DompetAEService();
+
     async read_data(id){
         let swal = require('sweetalert2').default;
         let res = new ReturnModel();
-        let dompetAeService = new DompetAEService();
 
         let dompet = FormatData.isHtmlInput(document.getElementById('dompet'));
         let nominal = FormatData.isHtmlInput(document.getElementById('nominal'));
         try{
-            res = await dompetAeService.readData(id);
+            res = await this.dompetAeService.readData(id);
             if(res.number != 0){
                 swal.fire(`Error Number : ${res.number}`, res.message, 'success').then((onPress) => {
                     if(onPress.isConfirmed){
@@ -54,8 +24,8 @@ class DompetAEController{
                 return;
             }
 
-            dompet.value = dompetAeService.dompetData.dompet;
-            nominal.value = dompetAeService.dompetData.nominal;
+            dompet.value = this.dompetAeService.dompetData.dompet;
+            nominal.value = this.dompetAeService.dompetData.nominal;
         }catch(e){
             swal.fire('Error Read Data', e.message, 'error');
         }
@@ -64,20 +34,14 @@ class DompetAEController{
     async save_data(){
         let swal = require('sweetalert2').default;
         let res = new ReturnModel();
-        let dompetAeService = new DompetAEService();
-
-        let dompet = FormatData.isHtmlInput(document.getElementById('dompet'));
-        let nominal = FormatData.isHtmlInput(document.getElementById('nominal'));
 
         try{
-            if(FormatData.isNullorEmpty(dompet.value)){
-                swal.fire('Validasi', 'Nama Dompet wajib diisi');
+            if(FormatData.isNullorEmpty(this.dompetAeService.dompetData.dompet)){
+                swal.fire('Validasi', 'Nama Dompet wajib diisi', 'warning');
                 return;
             }
 
-            dompetAeService.dompetData.dompet = dompet.value;
-            dompetAeService.dompetData.nominal = nominal.value;
-            res = await dompetAeService.saveData();
+            res = await this.dompetAeService.saveData();
             if(res.number != 0){
                 swal.fire(`Error Number : ${res.number}`, res.message, 'error');
                 return;
@@ -98,14 +62,14 @@ class DompetAEController{
     async update_data(id){
         let swal = require('sweetalert2').default;
         let res = new ReturnModel();
-        let dompetAeService = new DompetAEService();
 
-        let dompet = FormatData.isHtmlInput(document.getElementById('dompet'));
-        let nominal = FormatData.isHtmlInput(document.getElementById('nominal'));
         try{
-            dompetAeService.dompetData.dompet = dompet.value;
-            dompetAeService.dompetData.nominal = nominal.value;
-            res = await dompetAeService.updateData(id);
+            if(FormatData.isNullorEmpty(this.dompetAeService.dompetData.dompet)){
+                swal.fire('Validasi', 'Nama Dompet wajib diisi', 'warning');
+                return;
+            }
+
+            res = await this.dompetAeService.updateData(id);
             if(res.number != 0){
                 swal.fire(`Error Number : ${res.number}`, res.message, 'error');
                 return;
@@ -122,3 +86,39 @@ class DompetAEController{
     }
 }
 //#endregion DompetAEController
+
+let dompetAe = new DompetAEController();
+window.addEventListener('load', () => {
+    const param = new URLSearchParams(window.location.search);
+    let id = param.get('id');
+    if(FormatData.isNullorEmpty(id)){
+        document.getElementById('title').innerHTML = 'Buat Dompet Baru';
+        document.getElementById('btn-save').setAttribute('data-mode', 'add');
+        return;
+    }
+
+    dompetAe.read_data(id);
+    
+    document.getElementById('title').innerHTML = 'Edit Dompet';
+    document.getElementById('btn-save').setAttribute('data-mode', 'edit');
+    document.getElementById('btn-save').setAttribute('data-item-id', id);
+});
+
+document.getElementById('dompet').addEventListener('keyup', (form) => {
+    dompetAe.dompetAeService.dompetData.dompet = form.target.value;
+});
+document.getElementById('nominal').addEventListener('keyup', (form) => {
+    dompetAe.dompetAeService.dompetData.nominal = form.target.value;
+});
+
+let btnSave = document.getElementById('btn-save');
+btnSave.addEventListener('click', () => {
+    let mode = btnSave.dataset.mode;
+    if(mode == 'add'){
+        dompetAe.save_data();
+        return;
+    }
+
+    let id = btnSave.dataset.itemId;
+    dompetAe.update_data(id);
+})

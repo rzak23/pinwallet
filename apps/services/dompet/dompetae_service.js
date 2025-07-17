@@ -4,9 +4,7 @@ import { DompetModel } from "../../models/dompet/dompet_model.js";
 import FormatData from "../../utils/formatdata.js";
 
 class DompetAEService{
-    constructor(){
-        this.dompetData = new DompetModel();
-    }
+    dompetData = new DompetModel();
 
     async readData(id){
         let res = new ReturnModel();
@@ -75,7 +73,7 @@ class DompetAEService{
                 return res;
             }
 
-            res.message = 'Dompet berhasil dibuat';
+            res.message = 'Dompet berhasil diperbarui';
             return res;
         }catch(e){
             res.number = 500;

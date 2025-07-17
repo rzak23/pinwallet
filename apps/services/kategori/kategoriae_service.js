@@ -4,9 +4,7 @@ import ReturnModel from "../../models/return_model.js";
 import FormatData from "../../utils/formatdata.js";
 
 class KategoriAEService{
-    constructor(){
-        this.kategoriData = new KategoriModel();
-    }
+    kategoriData = new KategoriModel();
 
     async readData(id){
         let res = new ReturnModel();

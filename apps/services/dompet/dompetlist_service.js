@@ -3,9 +3,7 @@ import ReturnModel from '../../models/return_model.js';
 import { DompetModel } from '../../models/dompet/dompet_model.js';
 
 class DompetListService{
-    constructor(){
-        this.dompetData = new DompetModel();
-    }
+    dompetData = new DompetModel();
 
     async requestData(){
         let res = new ReturnModel();

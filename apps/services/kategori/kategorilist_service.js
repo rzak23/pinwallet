@@ -3,9 +3,7 @@ import Koneksi from '../../lib/koneksi.js'
 import { KategoriModel } from '../../models/kategori/kategori_model.js';
 
 class KategoriListService{
-    constructor(){
-        this.kategoriData = new KategoriModel();
-    }
+    kategoriData = new KategoriModel();
 
     async requestData(){
         let res = new ReturnModel();

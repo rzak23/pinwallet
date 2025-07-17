@@ -3,45 +3,16 @@ import ReturnModel from "../../models/return_model.js";
 import KategoriAEService from "../../services/kategori/kategoriae_service.js";
 import FormatData from "../../utils/formatdata.js";
 
-window.addEventListener('load', () => {
-    const param = new URLSearchParams(window.location.search);
-    let id = param.get('id');
-    if(FormatData.isNullorEmpty(id)){
-        document.getElementById('title').innerHTML = 'Tambah Kategori';
-        document.getElementById('btn-save').setAttribute('data-mode', 'add');
-        return;
-    }
-
-    let kategori = new KategoriAEController();
-    kategori.read_data(id);
-    document.getElementById('title').innerHTML = 'Edit Kategori';
-    document.getElementById('btn-save').setAttribute('data-mode', 'edit');
-    document.getElementById('btn-save').setAttribute('data-item-id', id);
-});
-
-let btnSave = document.getElementById('btn-save');
-btnSave.addEventListener('click', () => {
-    let kategori = new KategoriAEController();
-
-    let mode = btnSave.dataset.mode;
-    if(mode == "add"){
-        kategori.save_data();
-        return;
-    }
-
-    let id = btnSave.dataset.itemId;
-    kategori.update_data(id);
-})
-
 //#region KategoriAEController
 class KategoriAEController{
+    kategoriAEService = new KategoriAEService();
+
     async read_data(id){
         let swal = require('sweetalert2').default;
         let res = new ReturnModel();
-        let kategoriAE = new KategoriAEService();
 
         try{
-            res = await kategoriAE.readData(id);
+            res = await this.kategoriAEService.readData(id);
             if(res.number != 0){
                 swal.fire(`Error Number : ${res.number}`, res.message, 'error').then((onPress) => {
                     if(onPress.isConfirmed){
@@ -51,8 +22,8 @@ class KategoriAEController{
                 return;
             }
 
-            document.getElementById('kategori').value = kategoriAE.kategoriData.kategori;
-            document.getElementById('tipe').value = kategoriAE.kategoriData.tipe;
+            document.getElementById('kategori').value = this.kategoriAEService.kategoriData.kategori;
+            document.getElementById('tipe').value = this.kategoriAEService.kategoriData.tipe;
         }catch(e){
             swal.fire('Error Read', e.message, 'error').then((onPress) => {
                 if(onPress.isConfirmed){
@@ -65,14 +36,14 @@ class KategoriAEController{
     async save_data(){
         let swal = require('sweetalert2').default;
         let res = new ReturnModel();
-        let kategoriAE = new KategoriAEService();
-        try{
-            let tipe = document.getElementById('tipe');
-            let kategori = FormatData.isHtmlInput(document.getElementById('kategori'));
 
-            kategoriAE.kategoriData.tipe = tipe.value;
-            kategoriAE.kategoriData.kategori = kategori.value;
-            res = await kategoriAE.saveData();
+        try{
+            if(FormatData.isNullorEmpty(this.kategoriAEService.kategoriData.kategori)){
+                swal.fire('Validasi', 'Nama Kategori wajib diisi', 'warning');
+                return;
+            }
+
+            res = await this.kategoriAEService.saveData();
             if(res.number != 0){
                 swal.fire(`Error Number : ${res.number}`, res.message, 'error');
                 return;
@@ -91,15 +62,14 @@ class KategoriAEController{
     async update_data(id){
         let swal = require('sweetalert2').default;
         let res = new ReturnModel();
-        let kategoriAE = new KategoriAEService();
         
         try{
-            let tipe = document.getElementById('tipe');
-            let kategori = FormatData.isHtmlInput(document.getElementById('kategori'));
-
-            kategoriAE.kategoriData.tipe = tipe.value;
-            kategoriAE.kategoriData.kategori = kategori.value;
-            res = await kategoriAE.updateData(id);
+            if(FormatData.isNullorEmpty(this.kategoriAEService.kategoriData.kategori)){
+                swal.fire('Validasi', 'Nama Kategori wajib diisi', 'warning');
+                return;
+            }
+            
+            res = await this.kategoriAEService.updateData(id);
             if(res.number != 0){
                 swal.fire(`Error Number : ${res.number}`, res.message, 'error');
                 return;
@@ -117,3 +87,39 @@ class KategoriAEController{
     }
 }
 //#endregion KategoriAEController
+
+let kategori = new KategoriAEController();
+
+window.addEventListener('load', () => {
+    const param = new URLSearchParams(window.location.search);
+    let id = param.get('id');
+    if(FormatData.isNullorEmpty(id)){
+        document.getElementById('title').innerHTML = 'Tambah Kategori';
+        document.getElementById('btn-save').setAttribute('data-mode', 'add');
+        return;
+    }
+
+    kategori.read_data(id);
+    document.getElementById('title').innerHTML = 'Edit Kategori';
+    document.getElementById('btn-save').setAttribute('data-mode', 'edit');
+    document.getElementById('btn-save').setAttribute('data-item-id', id);
+});
+
+document.getElementById('kategori').addEventListener('keyup', (form) => {
+    kategori.kategoriAEService.kategoriData.kategori = form.target.value;
+});
+document.getElementById('tipe').addEventListener('change', (form) => {
+    kategori.kategoriAEService.kategoriData.tipe = form.target.value;
+});
+
+let btnSave = document.getElementById('btn-save');
+btnSave.addEventListener('click', () => {
+    let mode = btnSave.dataset.mode;
+    if(mode == "add"){
+        kategori.save_data();
+        return;
+    }
+
+    let id = btnSave.dataset.itemId;
+    kategori.update_data(id);
+})

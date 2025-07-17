@@ -2,32 +2,16 @@ import KategoriListService from "../../services/kategori/kategorilist_service.js
 import ReturnModel from "../../models/return_model.js";
 import RouteName from "../../config/routename.js";
 
-window.addEventListener('load', () => {
-    let kategori = new KategoriListController();
-    kategori.list_data();
-});
-
-document.getElementById('btn-add').addEventListener('click', () => {
-    window.location.href = RouteName.kategoriae;
-});
-
-window.onClickEdit = (id) => {
-    window.location.href = `${RouteName.kategoriae}?id=${id}`;
-}
-
-window.onClickHapus = (id) => {
-    let kategori = new KategoriListController();
-    kategori.hapus(id);
-}
-
 //#region KategoriListController
 class KategoriListController{
+    kategoriListService = new KategoriListService();
+
     async list_data(){
         let swal = require('sweetalert2').default;
         let res = new ReturnModel();
-        let kategoriListService = new KategoriListService();
+
         try{
-            res = await kategoriListService.requestData();
+            res = await this.kategoriListService.requestData();
             if(res.number != 0){
                 swal.fire(`Error Number : ${res.number}`, res.message, 'error');
                 return;
@@ -76,10 +60,9 @@ class KategoriListController{
     async hapus(id){
         let swal = require('sweetalert2').default;
         let res = new ReturnModel();
-        let kategori = new KategoriListService();
 
         try{
-            res = await kategori.deleteData(id);
+            res = await this.kategoriListService.deleteData(id);
             if(res.number != 0){
                 swal.fire(`Error Number : ${res.number}`, res.message, 'error');
                 return;
@@ -97,3 +80,20 @@ class KategoriListController{
     }
 }
 //#endregion KategoriListController
+
+let kategori = new KategoriListController();
+window.addEventListener('load', () => {
+    kategori.list_data();
+});
+
+document.getElementById('btn-add').addEventListener('click', () => {
+    window.location.href = RouteName.kategoriae;
+});
+
+window.onClickEdit = (id) => {
+    window.location.href = `${RouteName.kategoriae}?id=${id}`;
+}
+
+window.onClickHapus = (id) => {
+    kategori.hapus(id);
+}

@@ -85,15 +85,17 @@ class AuthController{
 
 let auth = new AuthController();
 
+let btnRegis = document.getElementById('btn-regis');
+let btnLogin = document.getElementById('btn-login');
 window.addEventListener('keydown', async (event) => {
     if(event.key === 'Enter'){
-        await auth.create_akun();
+        if(btnRegis) await auth.create_akun();
+        if(btnLogin) await auth.login();
         event.preventDefault();
+        return;
     }
 });
 
-let btnRegis = document.getElementById('btn-regis');
-let btnLogin = document.getElementById('btn-login');
 if(btnRegis){
     document.getElementById('username').addEventListener('keyup', (form) => {
         auth.authService.userData.username = form.target.value;

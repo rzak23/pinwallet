@@ -47,6 +47,8 @@ class DompetAEService{
                 return res;
             }
 
+            if(this.dompetData.nominal > 0){}
+
             res.message = 'Dompet berhasil dibuat';
             return res;
         }catch(e){
